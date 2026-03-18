@@ -6,8 +6,8 @@ from dworshak_prompt import Obtain
 prompt = Obtain()
 
 # Ask for client credentials securely
-CLIENT_ID = prompt.secret("Enter your O365 Client ID: ")
-CLIENT_SECRET = prompt.secret("Enter your O365 Client Secret: ")
+CLIENT_ID = prompt.secret(service="o365",item="CLIENT_ID",message="Enter your O365 Client ID: ")
+CLIENT_SECRET = prompt.secret(service="o365",item="CLIENT_SECRET",message="Enter your O365 Client Secret: ")
 
 # Prepare credentials tuple
 credentials = (CLIENT_ID, CLIENT_SECRET)
