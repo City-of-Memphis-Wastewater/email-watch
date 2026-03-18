@@ -1,5 +1,5 @@
 # Example: secure credential input and O365 authentication
-from O365 import Account
+from O365 import Account, FileSystemTokenBackend
 from dworshak_prompt import Obtain, InterruptBehavior, PromptMode
 import os
 import logging
@@ -21,18 +21,22 @@ prompt = Obtain(
 )
 
 # Ask for client credentials securely
-CLIENT_ID = prompt.secret(service="o365",item="CLIENT_ID",message="Enter your O365 Client ID: ").value
-CLIENT_SECRET = prompt.secret(service="o365",item="CLIENT_SECRET",message="Enter your O365 Client Secret: ").value
+CLIENT_ID = prompt.secret(service="o365",item="CLIENT_ID_PAVLOV_EMAIL_WATCH",message="Enter your O365 Client ID: ").value
+CLIENT_SECRET = prompt.secret(service="o365",item="CLIENT_SECRET_PAVLOV_EMAIL_WATCH",message="Enter your O365 Client Secret: ").value
 
 # Prepare credentials tuple
 credentials = (CLIENT_ID, CLIENT_SECRET)
 
+# Stores the token in a hidden folder
+token_backend = FileSystemTokenBackend(token_path='.tokens', token_filename='microsoft_token.txt')
+account = Account(credentials, tenant_id='consumers', token_backend=token_backend)
+
 # Initialize O365 account
-account = Account(credentials)
+#account = Account(credentials, tenant_id='consumers')
 
 # Authenticate (interactive for first-time login)
 if not account.is_authenticated:
-    account.authenticate(scopes=['https://graph.microsoft.com/Mail.Read'])
+    account.authenticate(scopes=['https://graph.microsoft.com/Mail.Read', 'offline_access'])
 
 # Access mailbox and list folders
 mailbox = account.mailbox()
