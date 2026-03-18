@@ -12,3 +12,8 @@ dependencies = [
 
 [tool.uv.extra-build-dependencies]
 cryptography = []
+
+[tool.uv.sources] # for hardcoding local wheels, to test without leveraging PyPI.
+email-watch = { workspace = true }
+#pyhabitat = { path = "../pyhabitat/dist/pyhabitat-0.2.4-py3-none-any.whl" }
+#dworshak-prompt = { path = "../dworshak-prompt/dist/dworshak_prompt-0.2.34-py3-none-any.whl" }
