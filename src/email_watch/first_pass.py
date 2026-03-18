@@ -1,10 +1,21 @@
 # Example: secure credential input and O365 authentication
 from O365 import Account
-from dworshak_prompt import Obtain, InterruptBehavior
+from dworshak_prompt import Obtain, InterruptBehavior, PromptMode
+import os
+import logging
+logger=logging.getLogger(__name__)
 
+avoid_set = set()
+DWO_AVOID_CONSOLE = os.environ.get('DWO_AVOID_CONSOLE')
+if  DWO_AVOID_CONSOLE == "1":
+    avoid_set.add(PromptMode.CONSOLE)
+logger.warning(f"{avoid_set=}")
+logger.warning(f"{DWO_AVOID_CONSOLE=}")
+    
 # Instantiate the prompt handler
 prompt = Obtain(
-    interrupt_behavior = InterruptBehavior.EXIT
+    interrupt_behavior = InterruptBehavior.EXIT,
+    interface_avoid = avoid_set
 )
 
 # Ask for client credentials securely
