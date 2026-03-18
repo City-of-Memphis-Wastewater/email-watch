@@ -9,8 +9,10 @@ avoid_set = set()
 DWO_AVOID_CONSOLE = os.environ.get('DWO_AVOID_CONSOLE')
 if  DWO_AVOID_CONSOLE == "1":
     avoid_set.add(PromptMode.CONSOLE)
-logger.warning(f"{avoid_set=}")
-logger.warning(f"{DWO_AVOID_CONSOLE=}")
+else:
+    logger.warning("Use 'export DWO_AVOID_CONSOLE=1 to avoid the console, to make enable unhiding hidden input.'")
+logger.debug(f"{avoid_set=}")
+logger.debug(f"{DWO_AVOID_CONSOLE=}") 
     
 # Instantiate the prompt handler
 prompt = Obtain(
