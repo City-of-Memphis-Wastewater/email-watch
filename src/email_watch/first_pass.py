@@ -1,13 +1,15 @@
 # Example: secure credential input and O365 authentication
 from O365 import Account
-from dworshak_prompt import Obtain
+from dworshak_prompt import Obtain, InterruptBehavior
 
 # Instantiate the prompt handler
-prompt = Obtain()
+prompt = Obtain(
+    interrupt_behavior = InterruptBehavior.EXIT
+)
 
 # Ask for client credentials securely
-CLIENT_ID = prompt.secret(service="o365",item="CLIENT_ID",message="Enter your O365 Client ID: ")
-CLIENT_SECRET = prompt.secret(service="o365",item="CLIENT_SECRET",message="Enter your O365 Client Secret: ")
+CLIENT_ID = prompt.secret(service="o365",item="CLIENT_ID",message="Enter your O365 Client ID: ").value
+CLIENT_SECRET = prompt.secret(service="o365",item="CLIENT_SECRET",message="Enter your O365 Client Secret: ").value
 
 # Prepare credentials tuple
 credentials = (CLIENT_ID, CLIENT_SECRET)
